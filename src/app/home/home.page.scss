@@ -10,15 +10,25 @@ ion-header{ display: none; }
   .display{
     height: 20%;
     justify-content: flex-end;
-    padding: 0 .5rem;
-    margin: 0;
+    flex-direction: column;
 
-    p{
+    .sub-display, .main-display{
+      padding: 0 .5rem;
+      margin: 0;
       text-align: right;
+    }
+  
+    .sub-display{
+      font-weight: 400;
+      font-size: 1.4rem;
+    }
+
+    .main-display{
       font-weight: bolder;
       font-size: 3rem;
     }
   }
+
 
   .buttons{
     margin: 0;

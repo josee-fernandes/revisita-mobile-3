@@ -6,102 +6,153 @@ import { Component } from '@angular/core';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  firstValue:number = 0;
-  secondValue:number = 0;
-  result:string = '0';
-  operation:string = '';
-  concat:string = '';
-  pos:number = 0;
+  values:number[] = [];
+  operations:string[] = [];
+
+  subDisplay:string = '0';
+  display:string = '0';
+
+  result:number = 0;
+
+  settingValue:number = 0; // Responsável por controlar qual valor está sendo inserido
+  firstNumber:boolean = true;
+
 
   constructor() {}
 
 
   // Concatena os números e o ponto para se tornar de fato um valor numérico depois. '1' + '.' + '2' = '1.2' = 1.2
 
-  number(number:string){
-      this.concat += number;
-      
-      if(this.result == '0' || this.pos == 1)
-        this.result = number;
-      else
-        this.result += number;
-  }
-
-
-  // Define os valores para cálculo
-
-  setValue(){
-    if(this.pos === 0){
-      this.firstValue = parseFloat(this.concat);
-      this.pos = 1;
+  input(value:string){
+    if(this.firstNumber){
+      this.subDisplay = '0';
+      this.values = [];
+      this.operations = [];
+      this.settingValue = 0;
+      this.firstNumber = false;
     }
-    else
-      this.secondValue = parseFloat(this.concat);
-    this.concat = '';
+
+    if(this.display === '0') this.display = '';
+
+    this.display += value;
   }
 
-
-  // Definem operação e o primeiro valor
+  // Adicionam a operação e o valor na expressão
 
   divide(){
-    this.operation = 'divide';
-    this.setValue();
+    if(this.values[this.values.length-1] !== 0 || parseFloat(this.display) !== 0){
+      this.operations.push('divide');
+      this.values.push(parseFloat(this.display));
+      
+      if(this.subDisplay === '0') this.subDisplay = '';
+  
+      if(this.values[this.settingValue] > 0)
+        this.subDisplay += `${this.values[this.settingValue]}÷`;
+      else
+        this.subDisplay += `(${this.values[this.settingValue]})÷`;
+      this.display = '0'
+      
+      this.settingValue++;
+    }else console.log('0 não é um valor válido em uma divisão')
   }
 
   multiply(){
-    this.operation = 'multiply';
-    this.setValue();
+    this.operations.push('multiply');
+    this.values.push(parseFloat(this.display));
+
+    if(this.subDisplay === '0') this.subDisplay = '';
+
+    if(this.values[this.settingValue] > 0)
+      this.subDisplay += `${this.values[this.settingValue]}×`;
+    else
+      this.subDisplay += `(${this.values[this.settingValue]})×`;
+    this.display = '0';
+    
+    this.settingValue++;
   }
 
   subtract(){
-    this.operation = 'subtract';
-    this.setValue();
+    if(this.display == '0') this.display = '-';
+    else{
+      this.operations.push('subtract');
+      this.values.push(parseFloat(this.display));
+      
+      if(this.subDisplay === '0') this.subDisplay = '';
+
+      if(this.values[this.settingValue] > 0)
+        this.subDisplay += `${this.values[this.settingValue]}-`;
+      else
+        this.subDisplay += `(${this.values[this.settingValue]})-`;
+      this.display = '0';
+      
+      this.settingValue++;
+    }
   }
   
   sum(){
-    this.operation = 'sum';
-    this.setValue();
+    this.operations.push('sum');
+    this.values.push(parseFloat(this.display));
+
+    if(this.subDisplay === '0') this.subDisplay = '';
+
+    if(this.values[this.settingValue] > 0)
+      this.subDisplay += `${this.values[this.settingValue]}+`;
+    else
+      this.subDisplay += `(${this.values[this.settingValue]})+`;
+    this.display = '0';
+
+    this.settingValue++;
   }
 
 
   // Resolve a operação
 
   solve(){
-    this.setValue();
+    this.values.push(parseFloat(this.display));
 
-    switch(this.operation){
-      case 'divide':
-        if(this.firstValue === 0){
-          this.result = '0 não é divisível';
-        }else if(this.secondValue === 0){
-          this.result = 'Não é possível dividir por 0';
-        }else this.result = (this.firstValue / this.secondValue).toString();  
-      break;
-      case 'multiply':
-        this.result = (this.firstValue * this.secondValue).toString();
-      break;
-      case 'subtract':
-        this.result = (this.firstValue - this.secondValue).toString();
-      break;
-      case 'sum':
-        this.result = (this.firstValue + this.secondValue).toString();
-      break;
-      default:
-        this.result = 'Operação não selecionada.';
-      break;  
+    console.table(this.values);
+    console.table(this.operations);
+
+    let calculating = -1; // -1 : não está calculando | N > -1 : index referente ao valor e operação sendo calculado
+
+    while(true){
+      console.log(calculating);
+      console.log(this.result);
+      if(calculating == -1){
+        this.result = this.values[0];
+      }else{
+        if(this.operations[calculating] == 'divide'){
+          this.result /= this.values[calculating + 1];
+        }else if(this.operations[calculating] == 'multiply'){
+          this.result *= this.values[calculating + 1];
+        }else if(this.operations[calculating] == 'subtract'){
+          this.result -= this.values[calculating + 1];
+        }else if(this.operations[calculating] == 'sum'){
+          this.result += this.values[calculating + 1];
+        }else {
+          this.display = `${this.result}`;
+          this.firstNumber = true;
+          this.subDisplay = '';
+          break;
+        }
+      }
+
+      calculating++;
     }
   }
 
   clear(){
-    this.result = '0';
-    this.operation = '';
-    this.concat = '';
-    this.firstValue = 0;
-    this.secondValue = 0;
-    this.pos = 0;
+    this.values = [];
+    this.operations = [];
+    
+    this.subDisplay = '0';
+    this.display = '0';
+
+    this.firstNumber = true;
+    this.settingValue = 0;
   }
 
   switchSign(){
-    
+    this.display = `${parseFloat(this.display) * -1}`;
   }
 }
