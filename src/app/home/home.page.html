@@ -1,20 +1,85 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Blank
+      AGAMENON
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-grid class="calc">
+    <ion-row class="display">
+      <p>{{ result }}</p>
+    </ion-row>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+    <ion-row class="buttons">
+
+      <ion-col class="numbers">
+
+        <ion-grid>
+          <ion-row>
+              <ion-button>%</ion-button>
+              <ion-button>CE</ion-button>
+              <ion-button (click)="clear()">C</ion-button>
+          </ion-row>
+          <ion-row>
+            <ion-button (click)="number(7)">7</ion-button>
+            <ion-button (click)="number(8)">8</ion-button>
+            <ion-button (click)="number(9)">9</ion-button>
+          </ion-row>
+          <ion-row>
+            <ion-button (click)="number(4)">4</ion-button>
+            <ion-button (click)="number(5)">5</ion-button>
+            <ion-button (click)="number(6)">6</ion-button>
+          </ion-row>
+          <ion-row>
+            <ion-button (click)="number(1)">1</ion-button>
+            <ion-button (click)="number(2)">2</ion-button>
+            <ion-button (click)="number(3)">3</ion-button>
+          </ion-row>
+          <ion-row>
+            <ion-button (click)="switchSign()">+/-</ion-button>
+            <ion-button (click)="number(0)">0</ion-button>
+            <ion-button (click)="number('.')">.</ion-button>
+          </ion-row>
+        </ion-grid>
+
+      </ion-col>
+
+      <ion-col class="operations">
+
+        <ion-grid>
+          <ion-row>
+            <ion-button (click)="divide()">
+              &divide; <!-- &#247; -->
+            </ion-button>
+          </ion-row>
+          <ion-row>
+            <ion-button (click)="multiply()">
+              &times; <!-- &#215; -->
+            </ion-button>
+          </ion-row>
+          <ion-row>
+            <ion-button (click)="subtract()">
+              &minus; <!-- &#8722; -->
+            </ion-button>
+          </ion-row>
+          <ion-row>
+            <ion-button (click)="sum()">
+              &#43; <!-- plus -->
+            </ion-button>
+          </ion-row>
+          <ion-row>
+            <ion-button
+              class="equals"
+              (click)="solve()">
+              &#61; <!-- equals -->
+            </ion-button>
+          </ion-row>
+        </ion-grid>
+        
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
 </ion-content>
