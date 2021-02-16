@@ -1,20 +1,18 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      AGAMENON
+      AGAMENON - EFICIENTE
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-grid class="calc">
-    <ion-row class="display">
-      <div class="sub-display">
-        {{ subDisplay }}
-      </div>
-      <div class="main-display">
-        {{ display }}
-      </div>
+  <ion-grid class="calc">    
+    <ion-row class="sub-display">
+      {{ subDisplay }}
+    </ion-row>
+    <ion-row class="main-display">
+      {{ mainDisplay }}
     </ion-row>
 
     <ion-row class="buttons-wrapper">
@@ -22,30 +20,75 @@
       <ion-col class="numbers">
 
         <ion-grid>
-          <ion-row>
-              <ion-button (click)="percentage()">%</ion-button>
-              <ion-button (click)="clearEntry()">CE</ion-button>
-              <ion-button (click)="clear()">C</ion-button>
+          <ion-row class="first-row">
+            <ion-button
+              class="button"
+              (click)="percentage()">%
+            </ion-button>
+            <ion-button
+              class="button"
+              (click)="clearEntry()">CE
+            </ion-button>
+            <ion-button
+              class="button"
+              (click)="clear()">C
+            </ion-button>
           </ion-row>
           <ion-row>
-            <ion-button (click)="input(7)">7</ion-button>
-            <ion-button (click)="input(8)">8</ion-button>
-            <ion-button (click)="input(9)">9</ion-button>
+            <ion-button
+              class="button"
+              (click)="input(7)">7
+            </ion-button>
+            <ion-button
+              class="button"
+              (click)="input(8)">8
+            </ion-button>
+            <ion-button
+              class="button"
+              (click)="input(9)">9
+            </ion-button>
           </ion-row>
           <ion-row>
-            <ion-button (click)="input(4)">4</ion-button>
-            <ion-button (click)="input(5)">5</ion-button>
-            <ion-button (click)="input(6)">6</ion-button>
+            <ion-button
+              class="button"
+              (click)="input(4)">4
+            </ion-button>
+            <ion-button
+              class="button"
+              (click)="input(5)">5
+            </ion-button>
+            <ion-button
+              class="button"
+              (click)="input(6)">6
+            </ion-button>
           </ion-row>
           <ion-row>
-            <ion-button (click)="input(1)">1</ion-button>
-            <ion-button (click)="input(2)">2</ion-button>
-            <ion-button (click)="input(3)">3</ion-button>
+            <ion-button
+              class="button"
+              (click)="input(1)">1
+            </ion-button>
+            <ion-button
+              class="button"
+              (click)="input(2)">2
+            </ion-button>
+            <ion-button
+              class="button"
+              (click)="input(3)">3
+            </ion-button>
           </ion-row>
           <ion-row>
-            <ion-button (click)="switchSign()">+/-</ion-button>
-            <ion-button (click)="input(0)">0</ion-button>
-            <ion-button (click)="input('.')">.</ion-button>
+            <ion-button
+              class="button"
+              (click)="switchSign()">+/-
+            </ion-button>
+            <ion-button
+              class="button"
+              (click)="input(0)">0
+            </ion-button>
+            <ion-button
+              class="button"
+              (click)="input('.')">.
+            </ion-button>
           </ion-row>
         </ion-grid>
 
@@ -55,28 +98,36 @@
 
         <ion-grid>
           <ion-row>
-            <ion-button (click)="divide()">
+            <ion-button
+              class="button"
+              (click)="divide()">
               &divide; <!-- &#247; -->
             </ion-button>
           </ion-row>
           <ion-row>
-            <ion-button (click)="multiply()">
+            <ion-button
+              class="button"
+              (click)="multiply()">
               &times; <!-- &#215; -->
             </ion-button>
           </ion-row>
           <ion-row>
-            <ion-button (click)="subtract()">
+            <ion-button
+              class="button"  
+              (click)="subtract()">
               &minus; <!-- &#8722; -->
             </ion-button>
           </ion-row>
           <ion-row>
-            <ion-button (click)="sum()">
+            <ion-button 
+              class="button"
+              (click)="sum()">
               &#43; <!-- plus -->
             </ion-button>
           </ion-row>
           <ion-row>
             <ion-button
-              class="equals"
+              class="button equals"
               (click)="solve()">
               &#61; <!-- equals -->
             </ion-button>

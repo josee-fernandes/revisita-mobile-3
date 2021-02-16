@@ -10,7 +10,7 @@ export class HomePage {
   operations:string[] = [];
 
   subDisplay:string = '0';
-  display:string = '0';
+  mainDisplay:string = '0';
 
   result:number = 0;
 
@@ -32,9 +32,9 @@ export class HomePage {
       this.firstNumber = false;
     }
 
-    if(this.display === '0') this.display = '';
+    if(this.mainDisplay === '0') this.mainDisplay = '';
 
-    this.display += value;
+    this.mainDisplay += value;
   }
 
 
@@ -51,14 +51,14 @@ export class HomePage {
   // Adicionam a operação e o valor na expressão
 
   divide(){
-    if(this.values[this.values.length-1] !== 0 || parseFloat(this.display) !== 0){
+    if(this.values[this.values.length-1] !== 0 || parseFloat(this.mainDisplay) !== 0){
       this.operations.push('divide');
-      this.values.push(parseFloat(this.display));
+      this.values.push(parseFloat(this.mainDisplay));
       
       if(this.subDisplay === '0') this.subDisplay = '';
   
       this.refreshSubDisplay('÷');
-      this.display = '0'
+      this.mainDisplay = '0'
       
       this.settingValue++;
     }else console.log('0 não é um valor válido em uma divisão')
@@ -66,26 +66,26 @@ export class HomePage {
 
   multiply(){
     this.operations.push('multiply');
-    this.values.push(parseFloat(this.display));
+    this.values.push(parseFloat(this.mainDisplay));
 
     if(this.subDisplay === '0') this.subDisplay = '';
 
     this.refreshSubDisplay('×');
-    this.display = '0';
+    this.mainDisplay = '0';
     
     this.settingValue++;
   }
 
   subtract(){
-    if(this.display == '0') this.display = '-';
+    if(this.mainDisplay == '0') this.mainDisplay = '-';
     else{
       this.operations.push('subtract');
-      this.values.push(parseFloat(this.display));
+      this.values.push(parseFloat(this.mainDisplay));
       
       if(this.subDisplay === '0') this.subDisplay = '';
 
       this.refreshSubDisplay('-');
-      this.display = '0';
+      this.mainDisplay = '0';
       
       this.settingValue++;
     }
@@ -93,12 +93,12 @@ export class HomePage {
   
   sum(){
     this.operations.push('sum');
-    this.values.push(parseFloat(this.display));
+    this.values.push(parseFloat(this.mainDisplay));
 
     if(this.subDisplay === '0') this.subDisplay = '';
 
     this.refreshSubDisplay('+');
-    this.display = '0';
+    this.mainDisplay = '0';
 
     this.settingValue++;
   }
@@ -107,7 +107,7 @@ export class HomePage {
   // Resolve a expressão
 
   solve(){
-    this.values.push(parseFloat(this.display));
+    this.values.push(parseFloat(this.mainDisplay));
 
     this.refreshSubDisplay('=');
     
@@ -128,7 +128,7 @@ export class HomePage {
         else if(this.operations[calculating] == 'sum')
           this.result += this.values[calculating + 1];
         else {
-          this.display = `${this.result}`;
+          this.mainDisplay = `${this.result}`;
           this.firstNumber = true;
           break;
         }
@@ -139,11 +139,11 @@ export class HomePage {
   }
 
   percentage(){
-    this.display = `${this.values.reduce((accumulator, number) => number + accumulator) * parseFloat(this.display) / 100}`;
+    this.mainDisplay = `${this.values.reduce((accumulator, number) => number + accumulator) * parseFloat(this.mainDisplay) / 100}`;
   }
 
   clearEntry(){
-    this.display = '0';
+    this.firstNumber ? this.clear() : this.mainDisplay = '0';
   }
 
   clear(){
@@ -151,13 +151,13 @@ export class HomePage {
     this.operations = [];
     
     this.subDisplay = '0';
-    this.display = '0';
+    this.mainDisplay = '0';
 
     this.firstNumber = true;
     this.settingValue = 0;
   }
 
   switchSign(){
-    this.display = `${parseFloat(this.display) * -1}`;
+    this.mainDisplay = `${parseFloat(this.mainDisplay) * -1}`;
   }
 }
