@@ -152,6 +152,10 @@ export class HomePage {
     this.settingValue = 0;
   }
 
+  clearEntry(){
+    this.display = '0';
+  }
+
   switchSign(){
     this.display = `${parseFloat(this.display) * -1}`;
   }
