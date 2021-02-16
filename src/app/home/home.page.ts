@@ -25,6 +25,7 @@ export class HomePage {
 
   input(value:string){
     if(this.firstNumber){
+      this.mainDisplay = '';
       this.subDisplay = '0';
       this.values = [];
       this.operations = [];
