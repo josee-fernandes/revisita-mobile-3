@@ -17,13 +17,13 @@
       </div>
     </ion-row>
 
-    <ion-row class="buttons">
+    <ion-row class="buttons-wrapper">
 
       <ion-col class="numbers">
 
         <ion-grid>
           <ion-row>
-              <ion-button>%</ion-button>
+              <ion-button (click)="percentage()">%</ion-button>
               <ion-button (click)="clearEntry()">CE</ion-button>
               <ion-button (click)="clear()">C</ion-button>
           </ion-row>

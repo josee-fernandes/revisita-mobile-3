@@ -37,6 +37,17 @@ export class HomePage {
     this.display += value;
   }
 
+
+  // Atualiza o display secundário após alguma ação
+
+  refreshSubDisplay(sign:string){
+    if(this.values[this.settingValue] > 0)
+      this.subDisplay += `${this.values[this.settingValue]}${sign}`;
+    else
+      this.subDisplay += `(${this.values[this.settingValue]})${sign}`;
+  }
+
+
   // Adicionam a operação e o valor na expressão
 
   divide(){
@@ -46,10 +57,7 @@ export class HomePage {
       
       if(this.subDisplay === '0') this.subDisplay = '';
   
-      if(this.values[this.settingValue] > 0)
-        this.subDisplay += `${this.values[this.settingValue]}÷`;
-      else
-        this.subDisplay += `(${this.values[this.settingValue]})÷`;
+      this.refreshSubDisplay('÷');
       this.display = '0'
       
       this.settingValue++;
@@ -62,10 +70,7 @@ export class HomePage {
 
     if(this.subDisplay === '0') this.subDisplay = '';
 
-    if(this.values[this.settingValue] > 0)
-      this.subDisplay += `${this.values[this.settingValue]}×`;
-    else
-      this.subDisplay += `(${this.values[this.settingValue]})×`;
+    this.refreshSubDisplay('×');
     this.display = '0';
     
     this.settingValue++;
@@ -79,10 +84,7 @@ export class HomePage {
       
       if(this.subDisplay === '0') this.subDisplay = '';
 
-      if(this.values[this.settingValue] > 0)
-        this.subDisplay += `${this.values[this.settingValue]}-`;
-      else
-        this.subDisplay += `(${this.values[this.settingValue]})-`;
+      this.refreshSubDisplay('-');
       this.display = '0';
       
       this.settingValue++;
@@ -95,50 +97,53 @@ export class HomePage {
 
     if(this.subDisplay === '0') this.subDisplay = '';
 
-    if(this.values[this.settingValue] > 0)
-      this.subDisplay += `${this.values[this.settingValue]}+`;
-    else
-      this.subDisplay += `(${this.values[this.settingValue]})+`;
+    this.refreshSubDisplay('+');
     this.display = '0';
 
     this.settingValue++;
   }
 
 
-  // Resolve a operação
+  // Resolve a expressão
 
   solve(){
     this.values.push(parseFloat(this.display));
 
+    this.refreshSubDisplay('=');
+    
     console.table(this.values);
     console.table(this.operations);
 
     let calculating = -1; // -1 : não está calculando | N > -1 : index referente ao valor e operação sendo calculado
 
     while(true){
-      console.log(calculating);
-      console.log(this.result);
-      if(calculating == -1){
-        this.result = this.values[0];
-      }else{
-        if(this.operations[calculating] == 'divide'){
+      if(calculating == -1) this.result = this.values[0];
+      else{
+        if(this.operations[calculating] == 'divide')
           this.result /= this.values[calculating + 1];
-        }else if(this.operations[calculating] == 'multiply'){
+        else if(this.operations[calculating] == 'multiply')
           this.result *= this.values[calculating + 1];
-        }else if(this.operations[calculating] == 'subtract'){
+        else if(this.operations[calculating] == 'subtract')
           this.result -= this.values[calculating + 1];
-        }else if(this.operations[calculating] == 'sum'){
+        else if(this.operations[calculating] == 'sum')
           this.result += this.values[calculating + 1];
-        }else {
+        else {
           this.display = `${this.result}`;
           this.firstNumber = true;
-          this.subDisplay = '';
           break;
         }
       }
 
       calculating++;
     }
+  }
+
+  percentage(){
+    this.display = `${this.values.reduce((accumulator, number) => number + accumulator) * parseFloat(this.display) / 100}`;
+  }
+
+  clearEntry(){
+    this.display = '0';
   }
 
   clear(){
@@ -150,10 +155,6 @@ export class HomePage {
 
     this.firstNumber = true;
     this.settingValue = 0;
-  }
-
-  clearEntry(){
-    this.display = '0';
   }
 
   switchSign(){
